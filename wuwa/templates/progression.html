@@ -250,7 +250,9 @@
         </div>
 
 
-        <h2 class="section-title">Characters Progression</h2>
+        {% if user_characters|length > 0 %}
+            <h2 class="section-title">Characters Progression</h2>
+        {% endif %}
         <section class="plans-grid">
             {% for uc in user_characters %}
                 <div class="plan-card" style="position: relative;">
@@ -560,7 +562,9 @@
         </section>
 
 
-        <h2 class="section-title">Weapons Progression</h2>
+        {% if user_weapons|length > 0 %}
+            <h2 class="section-title">Weapons Progression</h2>
+        {% endif %}
         <section class="plans-grid">
             {% for wp in user_weapons %}
                 <div class="plan-card" style="position: relative;">
