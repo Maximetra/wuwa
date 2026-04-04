@@ -1,0 +1,102 @@
+<div class="modal" id="weaponAscensionModal" role="dialog" aria-labelledby="weaponAscensionModalTitle">
+    {% csrf_token %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="weaponAscensionModalTitle" data-id="">Weapon and Skill Materials</h3>
+                <button class="icon-btn close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-section">
+                    <div class="inv-header">
+                        <img class="inv-header-icon weaponAscensionModal-image" src="" alt="Null">
+                        <div class="inv-header-text">
+                            <div class="inv-header-name weaponAscensionModal-name">Null</div>
+                            <div class="inv-header-desc">Weapon and Skill Materials are used to upgrade a Resonator's Skills and to ascend Weapons.</div>
+                        </div>
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;">Null</label>: <input class="weaponAscensionModal-input" type="number" min="0" max="9999" step="1" data-key="Null">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;">Null</label>: <input class="weaponAscensionModal-input" type="number" min="0" max="9999" step="1" data-key="lv_exp2">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;">Null</label>: <input class="weaponAscensionModal-input" type="number" min="0" max="9999" step="1" data-key="lv_exp1">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;">Null</label>: <input class="weaponAscensionModal-input" type="number" min="0" max="9999" step="1" data-key="lv_exp1">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                </div>
+                <p id="inventoryHint" style="opacity:.8;margin-top:8px;font-size:12px;"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn close-cancel">Cancel</button>
+                <button id="weaponAscensionModal-save" class="primary-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.inventory-slider').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.weaponAscensionModal-input').val(val);
+        });
+
+        $('.weaponAscensionModal-input').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.inventory-slider').val(val);
+        });
+
+
+        $("#weaponAscensionModal").on( "click", "#weaponAscensionModal-save", function() {
+            const ressourceId = $('#weaponAscensionModalTitle').attr('data-id');
+            const quantity_green = parseInt($('.weaponAscensionModal-input').first().val());
+            const quantity_blue = parseInt($('.weaponAscensionModal-input').eq(1).val());
+            const quantity_purple = parseInt($('.weaponAscensionModal-input').eq(2).val());
+            const quantity_yellow = parseInt($('.weaponAscensionModal-input').last().val());
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/update_weapon_ascension/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    ressource_id: ressourceId,
+                    quantity_green: quantity_green,
+                    quantity_blue: quantity_blue,
+                    quantity_purple: quantity_purple,
+                    quantity_yellow: quantity_yellow
+                }),
+                success: function(response) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating weapon ascension: ' + error);
+                }
+            });
+        });
+    })
+</script>

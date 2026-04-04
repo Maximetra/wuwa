@@ -1,0 +1,20 @@
+<div class="modal" id="characterSelectModal" role="dialog" aria-labelledby="characterSelectModalTitle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="characterSelectModalTitle">Select Character</h3>
+                <button class="icon-btn close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="character-grid">
+                    {% for c in characters %}
+                        <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer;" class="character-card" data-id="{{ c.id }}">
+                            <img src="{{ c.image }}" alt="{{ c.name }}" title="{{ c.name }}">
+                            <div style="margin-top: 4px; font-size: 11px; opacity: 0.9; text-align: center;">{{ c.name }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

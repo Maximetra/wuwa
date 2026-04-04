@@ -1,0 +1,1 @@
+[{"stmt":"SELECT * FROM wuwa_userascension;","header":["id","ascension_id","user_id","quantity_ff","quantity_hf","quantity_lf","quantity_mf"],"rows":[["1","5","2","455","67","6348","4727"],["2","9","2","4000","300","10","20"]]}]

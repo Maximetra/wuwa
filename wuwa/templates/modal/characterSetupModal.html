@@ -1,0 +1,341 @@
+<div class="modal" id="characterSetupModal" data-id="" role="dialog" aria-labelledby="characterSetupModalTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="characterSetupModalImage" src="" alt="" class="setup-avatar">
+                <h3 id="characterSetupModalTitle"></h3>
+                <button class="icon-btn close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-grid">
+                    <div class="setup-section">
+                        <h4 data-i18n="level">Level</h4>
+                        <div class="setting-row" data-dual-attached="1">
+                            <div class="dual-wrapper">
+                                <div class="row-title">Character LVL</div>
+                                <div class="dual-number-row">
+                                    <div class="d-flex flex-column input-container">
+                                        <input id="character-min_level" type="number" value="1" min="1" max="90">
+                                        <div class="dual-slider-row">
+                                            <input type="range" value="1" min="1" max="90" step="1">
+                                        </div>
+                                    </div>
+                                    <div class="arrow big">→</div>
+                                    <div class="d-flex flex-column input-container">
+                                        <input id="character-max_level" type="number" value="90" min="1" max="90">
+                                        <div class="dual-slider-row">
+                                            <input type="range" value="90" min="1" max="90" step="1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-section">
+                        <h4 data-i18n="skillst type="range"">Skills</h4>
+                        <div class="skill-list">
+                            <div class="setting-row" data-dual-attached="1">
+                                <div class="dual-wrapper">
+                                    <div class="row-title">Normal attack</div>
+                                    <div class="dual-number-row">
+                                        <div class="d-flex flex-column input-container">
+                                        <input id="min_normal_attack_level" type="number" min="1" max="10" value="1">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="1" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="arrow big">→</div>
+                                        <div class="d-flex flex-column input-container">
+                                            <input id="max_normal_attack_level" type="number" min="1" max="10" value="10">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="10" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-row" data-dual-attached="1">
+                                <div class="dual-wrapper">
+                                    <div class="row-title">Resonance Skill</div>
+                                    <div class="dual-number-row">
+                                        <div class="d-flex flex-column input-container">
+                                        <input id="min_resonance_skill_level" type="number" min="1" max="10" value="1">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="1" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="arrow big">→</div>
+                                        <div class="d-flex flex-column input-container">
+                                            <input id="max_resonance_skill_level" type="number" min="1" max="10" value="10">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="10" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-row" data-dual-attached="1">
+                                <div class="dual-wrapper">
+                                    <div class="row-title">Resonance Liberation</div>
+                                    <div class="dual-number-row">
+                                        <div class="d-flex flex-column input-container">
+                                        <input id="min_resonance_liberation_level" type="number" min="1" max="10" value="1">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="1" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="arrow big">→</div>
+                                        <div class="d-flex flex-column input-container">
+                                            <input id="max_resonance_liberation_level" type="number" min="1" max="10" value="10">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="10" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-row" data-dual-attached="1">
+                                <div class="dual-wrapper">
+                                    <div class="row-title">Forte Circuit</div>
+                                    <div class="dual-number-row">
+                                        <div class="d-flex flex-column input-container">
+                                        <input id="min_forte_circuit_level" type="number" min="1" max="10" value="1">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="1" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="arrow big">→</div>
+                                        <div class="d-flex flex-column input-container">
+                                            <input id="max_forte_circuit_level" type="number" min="1" max="10" value="10">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="10" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-row" data-dual-attached="1">
+                                <div class="dual-wrapper">
+                                    <div class="row-title">Intro Skill</div>
+                                    <div class="dual-number-row">
+                                        <div class="d-flex flex-column input-container">
+                                        <input id="min_intro_skill_level" type="number" min="1" max="10" value="1">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="1" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="arrow big">→</div>
+                                        <div class="d-flex flex-column input-container">
+                                            <input id="max_intro_skill_level" type="number" min="1" max="10" value="10">
+                                            <div class="dual-slider-row">
+                                                <input type="range" value="10" min="1" max="10" step="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-section" id="stat_bonus">
+                        <h4 data-i18n="mind">Stat Bonus</h4>
+                        <div class="row g-2">
+                            <div>
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="second_tier_trace1" name="image[]" value="1" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+                                
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center mt-4">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="first_tier_trace1" name="image[]" value="2" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="second_tier_trace2" name="image[]" value="3" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+    
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center mt-4">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="first_tier_trace2" name="image[]" value="4" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div>
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="second_tier_trace3" name="image[]" value="3" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center mt-4">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="first_tier_trace3" name="image[]" value="4" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="second_tier_trace4" name="image[]" value="3" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+
+                                <div class="col-4 col-sm-3 col-md-2 p-0 text-center mt-4">
+                                    <label class="image-checkbox">
+                                        <img class="img-fluid" src=""/>
+                                        <input id="first_tier_trace4" name="image[]" value="4" type="checkbox" />
+                                        <i class="fa fa-check d-none"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-section" id="inherent_skill">
+                        <h4 data-i18n="mindscapeCore">Inherent Skill</h4>
+                        <div class="row g-2">
+                            <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                <label class="image-checkbox">
+                                    <img class="img-fluid" src=""/>
+                                    <input id="first_inherent_skill" name="image[]" value="1" type="checkbox" />
+                                    <i class="fa fa-check d-none"></i>
+                                </label>
+                            </div>
+
+                            <div class="col-4 col-sm-3 col-md-2 p-0 text-center">
+                                <label class="image-checkbox">
+                                    <img class="img-fluid" src=""/>
+                                    <input id="second_inherent_skill" name="image[]" value="4" type="checkbox" />
+                                    <i class="fa fa-check d-none"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn close-cancel">Cancel</button>
+                <button id="characterSetupModal-save" class="primary-btn" data-i18n="save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('input[type="range"]').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.input-container').find('input[type="number"]').val(val);
+        });
+
+        $('.input-container > input').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.input-container').find('input[type="range"]').val(val);
+        });
+
+        $("#characterSetupModal").on( "click", "#characterSetupModal-save", function() {
+            const character_id = parseInt($('#characterSetupModal').attr('data-id'));
+            const min_level = parseInt($('#character-min_level').val());
+            const max_level = parseInt($('#character-max_level').val());
+
+            const min_normal_attack_level = parseInt($('#min_normal_attack_level').val());
+            const max_normal_attack_level = parseInt($('#max_normal_attack_level').val());
+
+            const min_resonance_skill_level = parseInt($('#min_resonance_skill_level').val());
+            const max_resonance_skill_level = parseInt($('#max_resonance_skill_level').val());
+
+            const min_resonance_liberation_level = parseInt($('#min_resonance_liberation_level').val());
+            const max_resonance_liberation_level = parseInt($('#max_resonance_liberation_level').val());
+
+            const min_forte_circuit_level = parseInt($('#min_forte_circuit_level').val());
+            const max_forte_circuit_level = parseInt($('#max_forte_circuit_level').val());
+
+            const min_intro_skill_level = parseInt($('#min_intro_skill_level').val());
+            const max_intro_skill_level = parseInt($('#max_intro_skill_level').val());
+
+            const first_tier_trace1 = $('#first_tier_trace1').is(':checked');
+            const first_tier_trace2 = $('#first_tier_trace2').is(':checked');
+            const first_tier_trace3 = $('#first_tier_trace3').is(':checked');
+            const first_tier_trace4 = $('#first_tier_trace4').is(':checked');
+            const second_tier_trace1 = $('#second_tier_trace1').is(':checked');
+            const second_tier_trace2 = $('#second_tier_trace2').is(':checked');
+            const second_tier_trace3 = $('#second_tier_trace3').is(':checked');
+            const second_tier_trace4 = $('#second_tier_trace4').is(':checked');
+
+            const first_inherent_skill = $('#first_inherent_skill').is(':checked');
+            const second_inherent_skill = $('#second_inherent_skill').is(':checked');
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/update_user_character/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    character_id: character_id,
+                    min_level: min_level,
+                    max_level: max_level,
+                    min_normal_attack_level: min_normal_attack_level,
+                    max_normal_attack_level: max_normal_attack_level,
+                    min_resonance_skill_level: min_resonance_skill_level,
+                    max_resonance_skill_level: max_resonance_skill_level,
+                    min_resonance_liberation_level: min_resonance_liberation_level,
+                    max_resonance_liberation_level: max_resonance_liberation_level,
+                    min_forte_circuit_level: min_forte_circuit_level,
+                    max_forte_circuit_level: max_forte_circuit_level,
+                    min_intro_skill_level: min_intro_skill_level,
+                    max_intro_skill_level: max_intro_skill_level,
+                    first_tier_trace1: first_tier_trace1,
+                    first_tier_trace2: first_tier_trace2,
+                    first_tier_trace3: first_tier_trace3,
+                    first_tier_trace4: first_tier_trace4,
+                    second_tier_trace1: second_tier_trace1,
+                    second_tier_trace2: second_tier_trace2,
+                    second_tier_trace3: second_tier_trace3,
+                    second_tier_trace4: second_tier_trace4,
+                    first_inherent_skill: first_inherent_skill,
+                    second_inherent_skill: second_inherent_skill
+                }),
+                success: function(res) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating ressource: ' + error);
+                }
+            });
+        });
+    })
+</script>

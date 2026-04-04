@@ -1,0 +1,738 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'wuwa/css/progressions.css' %}" />
+    <link rel="stylesheet" href="{% static 'wuwa/css/character.css' %}" />
+    <div class="main-wrapper">
+        <div class="header-container">
+            <div class="header-title">
+                <h1 id="plannerTitle" data-i18n="pageTitle">Progression Calculator</h1>
+                <p class="page-description" id="page-description" data-i18n="pageDescription">Calculate the materials needed to level up characters and upgrade skills.</p>
+            </div>
+            <div class="planner-toolbar">
+                <button id="addCharacterBtn" class="primary-btn">+ <span>Add Character</span></button>
+                <button id="addWeaponBtn" class="primary-btn">+ <span>Add Weapon</span></button>
+            </div>
+        </div>
+
+        <section class="summary-card card-style">
+            <div class="summary-header collapsed" data-bs-toggle="collapse" data-bs-target="#summaryContent" aria-expanded="false" aria-controls="summaryContent">
+                <h2 data-i18n="materialSummary">Material Summary</h2>
+                <a class="nav-link collapsed" href="#">
+                    <div class="sb-sidenav-collapse-arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="collapse" id="summaryContent">
+                <div id="summaryGrid" class="material-grid">
+                    {% for r in ressources  %}
+                        <div class="material-chip default ressource_modal" data-id="{{r.id}}">
+                            <img class="image-item" src="{{r.image}}" alt="{{r.name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if r.user_ressource_quantity < r.need %}bad{% endif %}"
+                                >{{r.user_ressource_quantity}}</span>/<span class="need">{{r.need}}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for a  in ascensions  %}
+                        <div class="material-chip lv0 ascension_modal" data-id="{{a.id}}">
+                            <img class="image-item" src="{{a.lf_image}}" alt="{{a.lf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if a.user_ascension_quantity_lf < a.need_lf %}bad{% endif %}"
+                                >{{a.user_ascension_quantity_lf}}</span>/<span class="need">{{a.need_lf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 ascension_modal" data-id="{{a.id}}">
+                            {% if a.remains_to_farm_mf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{a.remains_to_farm_mf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{a.mf_image}}" alt="{{a.mf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if a.user_ascension_quantity_mf < a.need_mf %}bad{% endif %}"
+                                >{{a.user_ascension_quantity_mf}}</span>/<span class="need">{{a.need_mf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 ascension_modal" data-id="{{a.id}}">
+                            {% if a.remains_to_farm_hf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{a.remains_to_farm_hf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{a.hf_image}}" alt="{{a.hf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if a.user_ascension_quantity_hf < a.need_hf %}bad{% endif %}"
+                                >{{a.user_ascension_quantity_hf}}</span>/<span class="need">{{a.need_hf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 ascension_modal" data-id="{{a.id}}">
+                            {% if a.remains_to_farm_ff > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{a.remains_to_farm_ff}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{a.ff_image}}" alt="{{a.ff_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if a.user_ascension_quantity_ff < a.need_ff %}bad{% endif %}"
+                                >{{a.user_ascension_quantity_ff}}</span>/<span class="need">{{a.need_ff}}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for wa  in weapon_ascensions  %}
+                        <div class="material-chip lv0 weapon_ascension_modal" data-id="{{wa.id}}">
+                            <img src="{{wa.green_image}}" alt="{{wa.green_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wa.user_weapon_ascension_quantity_green < wa.need_green %}bad{% endif %}"
+                                >{{wa.user_weapon_ascension_quantity_green}}</span>/<span class="need">{{wa.need_green}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 weapon_ascension_modal" data-id="{{wa.id}}">
+                            {% if wa.remains_to_farm_blue > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wa.remains_to_farm_blue}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wa.blue_image}}" alt="{{wa.blue_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wa.user_weapon_ascension_quantity_blue < wa.need_blue %}bad{% endif %}"
+                                >{{wa.user_weapon_ascension_quantity_blue}}</span>/<span class="need">{{wa.need_blue}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 weapon_ascension_modal" data-id="{{wa.id}}">
+                            {% if wa.remains_to_farm_purple > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wa.remains_to_farm_purple}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wa.purple_image}}" alt="{{wa.purple_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wa.user_weapon_ascension_quantity_purple < wa.need_purple %}bad{% endif %}"
+                                >{{wa.user_weapon_ascension_quantity_purple}}</span>/<span class="need">{{wa.need_purple}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 weapon_ascension_modal" data-id="{{wa.id}}">
+                            {% if wa.remains_to_farm_yellow > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wa.remains_to_farm_yellow}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wa.yellow_image}}" alt="{{wa.yellow_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wa.user_weapon_ascension_quantity_yellow < wa.need_yellow %}bad{% endif %}"
+                                >{{wa.user_weapon_ascension_quantity_yellow}}</span>/<span class="need">{{wa.need_yellow}}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for ra  in resonator_ascensions  %}
+                        <div class="material-chip lv3 resonator_ascension_modal" data-id="{{ra.id}}">
+                            <img class="image-item" src="{{ra.image}}" alt="{{ra.name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if ra.user_resonator_ascension_quantity < ra.need %}bad{% endif %}"
+                                >{{ra.user_resonator_ascension_quantity}}</span>/<span class="need">{{ra.need}}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for su in skill_upgrades  %}
+                        <div class="material-chip lv3 skill_upgrade_modal" data-id="{{su.id}}">
+                            <img class="image-item" src="{{su.image}}" alt="{{su.name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if su.user_skill_upgrade_quantity < su.need %}bad{% endif %}"
+                                >{{su.user_skill_upgrade_quantity}}</span>/<span class="need">{{su.need}}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <div class="filter-section" id="plannerFilterSection">
+            <div class="filter-header" style="display:flex;align-items:center;gap:8px;">
+                <a class="filter-toggle-btn" href="#" data-bs-toggle="collapse" data-bs-target="#plannerFilterContent" aria-expanded="false" aria-controls="plannerFilterContent">
+                    <img src="{% static 'wuwa/img/filter.png' %}" alt="Filter">
+                    <span data-i18n="filterLabel">Filter</span>
+                </a>
+                <div style="flex:1"></div>
+
+                <label style="display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.8);font-size:14px;">
+                    <span id="sortLabel" data-i18n="sortLabel">Sort</span>
+                    <select id="plannerSortSelect" style="background:var(--card-background);border: none;color:#ffffffeb;padding:6px 8px;border-radius:4px;">
+                        <option value="release_asc" data-i18n="sortReleaseAsc">Release ↑</option>
+                        <option value="release_desc" data-i18n="sortReleaseDesc">Release ↓</option>
+                        <option value="name_asc" data-i18n="sortNameAsc">Name ↑</option>
+                        <option value="name_desc" data-i18n="sortNameDesc">Name ↓</option>
+                        <option value="custom" data-i18n="sortCustom">Custom</option>
+                    </select>
+                    <button id="plannerSortCustomBtn" class="icon-btn" title="Custom order" data-i18n-aria="customOrderButtonTitle" style="display:none;padding:6px 6px;line-height:0;" aria-label="Custom order">
+                        <!-- sliders icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <circle cx="10" cy="6" r="2"></circle>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <circle cx="14" cy="12" r="2"></circle>
+                            <line x1="4" y1="18" x2="20" y2="18"></line>
+                            <circle cx="8" cy="18" r="2"></circle>
+                        </svg>
+                    </button>
+                </label>
+                <button class="filter-reset-btn" id="plannerFilterReset">
+                    <img src="{% static 'wuwa/img/reset.png' %}" alt="Reset">
+                </button>
+            </div>
+
+            <div class="collapse filter-content" id="plannerFilterContent">
+                <div class="filter-group">
+                    <h3 data-i18n="filterGroupElement">Element</h3>
+                    <div class="filter-options">
+                        {% for element  in elements  %}
+                            <label><input type="checkbox" name="element" value="{{ element.name }}"><img src="{{ element.image }}" alt="{{ element.name }}"><span></span></label>     
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h3 data-i18n="filterGroupPosition">Role</h3>
+                    <div class="filter-options">
+                        {% for weapon_type  in weapon_types  %}
+                            <label>
+                                <input type="checkbox" name="position" value="{{ weapon_type.name }}" />
+                                <img src="{{ weapon_type.image }}" alt="{{ weapon_type.name }}" />
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h3 data-i18n="filterGroupRarity">Rarity</h3>
+                    <div class="filter-options tag-options">
+                        <label>
+                            <input type="checkbox" name="rarity" value="5" hidden="">
+                            <div class="star-container">
+                                <img src="{% static 'wuwa/img/star5.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star5.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star5.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star5.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star5.png' %}" alt="★">
+                            </div>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="rarity" value="4" hidden="">
+                            <div class="star-container">
+                                <img src="{% static 'wuwa/img/star4.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star4.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star4.png' %}" alt="★">
+                                <img src="{% static 'wuwa/img/star4.png' %}" alt="★">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <h2 class="section-title">Characters Progression</h2>
+        <section class="plans-grid">
+            {% for uc in user_characters %}
+                <div class="plan-card" style="position: relative;">
+                    <div class="plan-header" style="position: relative;">
+                        <div class="plan-title">
+                            <img src="{{uc.character.image}}" alt="{{uc.character.name}}" class="plan-avatar">
+                            <div class="plan-title-right">
+                                <div class="name-row" style="display: flex; align-items: center; gap: 8px;">{{uc.character.name}}
+                                    <label style="margin-left: auto; display: flex; align-items: center;">
+                                        <input 
+                                            class="character-active" type="checkbox" title="Include in Material Summary" aria-label="Include in Material Summary"
+                                            {% if uc.active %}checked{% endif %} data-id="{{uc.character.id}}"
+                                        >
+                                    </label>
+                                </div>
+                                <div class="meta-row">
+                                    <img src="{{uc.character.element.image}}" alt="{{uc.character.element.name}}" class="meta-icon">
+                                    <img src="{{uc.character.weapon_type.image}}" alt="{{uc.character.weapon_type.name}}" class="meta-icon">
+                                    <span class="star-wrap">
+                                        {% for key in uc.character.rarity_range %}
+                                            <img src="{% static 'wuwa/img/' %}star{{uc.character.rarity}}.png" alt="star" style="width: 14px; height: 14px; object-fit: contain;">
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="plan-actions">
+                            <button class="view-details_btn mini-btn">View Details</button>
+                            <button class="menu-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1"></circle>
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="12" cy="19" r="1"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="menu">
+                            <button class="edit-character_btn" data-characterId="{{uc.character.id}}" data-id="{{uc.id}}">Edit</button>
+                            <button class="remove-character_btn" data-id="{{uc.character.id}}" data-name="{{uc.character.name}}" data-image_name="{{uc.character.image}}" style="color: tomato;">Remove</button>
+                        </div>
+                    </div>
+                    <div class="material-grid">
+                        <div class="material-chip lv3 resonator_ascension_modal" data-id="{{uc.resonator_ascension.id}}">
+                            <img class="image-item" src="{{uc.resonator_ascension.image}}" alt="{{uc.resonator_ascension.name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.resonator_ascension.user_resonator_ascension_quantity < uc.resonator_ascension.need %}bad{% endif %}"
+                                >{{uc.resonator_ascension.user_resonator_ascension_quantity}}</span>/<span class="need">{{uc.resonator_ascension.need}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip default ressource_modal" data-id="{{uc.ressource.id}}">
+                            <img class="image-item" src="{{uc.ressource.image}}" alt="{{uc.ressource.name}}">
+                            <div class="cnt">
+                                <span
+                                    class="own {% if uc.ressource.user_ressource_quantity < uc.ressource.need %}bad{% endif %}"
+                                >{{uc.ressource.user_ressource_quantity}}</span>/<span class="need">{{uc.ressource.need}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv0 ascension_modal" data-id="{{uc.ascension.id}}">
+                            <img class="image-item" src="{{uc.ascension.lf_image}}" alt="{{uc.ascension.lf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.ascension.user_ascension_quantity_lf < uc.ascension.need_lf %}bad{% endif %}"
+                                >{{uc.ascension.user_ascension_quantity_lf}}</span>/<span class="need">{{uc.ascension.need_lf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 ascension_modal" data-id="{{uc.ascension.id}}">
+                            {% if uc.ascension.remains_to_farm_mf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.ascension.remains_to_farm_mf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.ascension.mf_image}}" alt="{{uc.ascension.mf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.ascension.user_ascension_quantity_mf < uc.ascension.need_mf %}bad{% endif %}"
+                                >{{uc.ascension.user_ascension_quantity_mf}}</span>/<span class="need">{{uc.ascension.need_mf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 ascension_modal" data-id="{{uc.ascension.id}}">
+                            {% if uc.ascension.remains_to_farm_hf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.ascension.remains_to_farm_hf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.ascension.hf_image}}" alt="{{uc.ascension.hf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.ascension.user_ascension_quantity_hf < uc.ascension.need_hf %}bad{% endif %}"
+                                >{{uc.ascension.user_ascension_quantity_hf}}</span>/<span class="need">{{uc.ascension.need_hf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 ascension_modal" data-id="{{uc.ascension.id}}">
+                            {% if uc.ascension.remains_to_farm_ff > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.ascension.remains_to_farm_ff}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.ascension.ff_image}}" alt="{{uc.ascension.ff_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.ascension.user_ascension_quantity_ff < uc.ascension.need_ff %}bad{% endif %}"
+                                >{{uc.ascension.user_ascension_quantity_ff}}</span>/<span class="need">{{uc.ascension.need_ff}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv0 weapon_ascension_modal" data-id="{{uc.weapon_ascension.id}}">
+                            <img class="image-item" src="{{uc.weapon_ascension.green_image}}" alt="{{uc.weapon_ascension.green_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.weapon_ascension.user_weapon_ascension_quantity_green < uc.weapon_ascension.need_green %}bad{% endif %}"
+                                >{{uc.weapon_ascension.user_weapon_ascension_quantity_green}}</span>/<span class="need">{{uc.weapon_ascension.need_green}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 weapon_ascension_modal" data-id="{{uc.weapon_ascension.id}}">
+                            {% if uc.weapon_ascension.remains_to_farm_blue > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.weapon_ascension.remains_to_farm_blue}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.weapon_ascension.blue_image}}" alt="{{uc.weapon_ascension.blue_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.weapon_ascension.user_weapon_ascension_quantity_blue < uc.weapon_ascension.need_blue %}bad{% endif %}"
+                                >{{uc.weapon_ascension.user_weapon_ascension_quantity_blue}}</span>/<span class="need">{{uc.weapon_ascension.need_blue}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 weapon_ascension_modal" data-id="{{uc.weapon_ascension.id}}">
+                            {% if uc.weapon_ascension.remains_to_farm_purple > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.weapon_ascension.remains_to_farm_purple}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.weapon_ascension.purple_image}}" alt="{{uc.weapon_ascension.purple_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.weapon_ascension.user_weapon_ascension_quantity_purple < uc.weapon_ascension.need_purple %}bad{% endif %}"
+                                >{{uc.weapon_ascension.user_weapon_ascension_quantity_purple}}</span>/<span class="need">{{uc.weapon_ascension.need_purple}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 weapon_ascension_modal" data-id="{{uc.weapon_ascension.id}}">
+                            {% if uc.weapon_ascension.remains_to_farm_yellow > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{uc.weapon_ascension.remains_to_farm_yellow}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{uc.weapon_ascension.yellow_image}}" alt="{{uc.weapon_ascension.yellow_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.weapon_ascension.user_weapon_ascension_quantity_yellow < uc.weapon_ascension.need_yellow %}bad{% endif %}"
+                                >{{uc.weapon_ascension.user_weapon_ascension_quantity_yellow}}</span>/<span class="need">{{uc.weapon_ascension.need_yellow}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 skill_upgrade_modal" data-id="{{uc.skill_upgrade.id}}">
+                            <img class="image-item" src="{{uc.skill_upgrade.image}}" alt="{{uc.skill_upgrade.name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if uc.skill_upgrade.user_skill_upgrade_quantity < uc.skill_upgrade.need %}bad{% endif %}"
+                                >{{uc.skill_upgrade.user_skill_upgrade_quantity}}</span>/<span class="need">{{uc.skill_upgrade.need}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="plan-details d-none">
+                        <div class="d-flex">
+                            <span>Level</span>
+                            <div class="ms-auto">{{uc.statisitics.min_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Normal Attack</span>
+                            <div class="ms-auto">{{uc.statisitics.min_normal_attack_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_normal_attack_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Resonance Skill</span>
+                            <div class="ms-auto">{{uc.statisitics.min_resonance_skill_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_resonance_skill_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Resonance Liberation</span>
+                            <div class="ms-auto">{{uc.statisitics.min_resonance_liberation_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_resonance_liberation_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Forte Circuit</span>
+                            <div class="ms-auto">{{uc.statisitics.min_forte_circuit_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_forte_circuit_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Intro Skill</span>
+                            <div class="ms-auto">{{uc.statisitics.min_intro_skill_level}}</div>
+                            <div>→</div>
+                            <div>{{uc.statisitics.max_intro_skill_level}}</div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>First Tier Trace 1</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.first_tier_trace1 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Second Tier Trace 1</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.second_tier_trace1 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>First Tier Trace 2</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.first_tier_trace2 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Second Tier Trace 2</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.second_tier_trace2 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>First Tier Trace 3</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.first_tier_trace3 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Second Tier Trace 3</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.second_tier_trace3 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>First Tier Trace 4</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.first_tier_trace4 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <span>Second Tier Trace 4</span>
+                            <div class="ms-auto">
+                                {% if uc.statisitics.second_tier_trace4 %}
+                                    active
+                                {% else %}
+                                    inactive
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="plan-overlay" style="
+                        position: absolute; inset: 0px; background: rgba(0, 0, 0, 0.5); pointer-events: none; z-index: 10; border-radius: inherit; 
+                       display:{% if uc.active %} none {% else %} block {% endif %};
+                    "></div>
+                </div>
+            {% endfor %}
+        </section>
+
+
+        <h2 class="section-title">Weapons Progression</h2>
+        <section class="plans-grid">
+            {% for wp in user_weapons %}
+                <div class="plan-card" style="position: relative;">
+                    <div class="plan-header" style="position: relative;">
+                        <div class="plan-title">
+                            <img src="{{wp.weapon.image}}" alt="{{wp.weapon.name}}" class="plan-avatar">
+                            <div class="plan-title-right">
+                                <div class="name-row" style="display: flex; align-items: center; gap: 8px;">{{wp.weapon.name}}
+                                    <label style="margin-left: auto; display: flex; align-items: center;">
+                                        <input 
+                                            class="weapon-active" type="checkbox" title="Include in Material Summary" aria-label="Include in Material Summary"
+                                            {% if wp.active %}checked{% endif %} data-id="{{wp.weapon.id}}"
+                                        >
+                                    </label>
+                                </div>
+                                <div class="meta-row">
+                                    <img src="{{wp.weapon.weapon_type.image}}" alt="{{wp.weapon.weapon_type.name}}" class="meta-icon">
+                                    <span class="star-wrap">
+                                        {% for key in wp.weapon.rarity_range %}
+                                            <img src="{% static 'wuwa/img/' %}star{{wp.weapon.rarity}}.png" alt="star" style="width: 14px; height: 14px; object-fit: contain;">
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="plan-actions">
+                            <button class="view-details_btn mini-btn">View Details</button>
+                            <button class="menu-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="5" r="1"></circle>
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="12" cy="19" r="1"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="menu">
+                            <button class="edit-weapon_btn" data-weaponId="{{wp.weapon.id}}" data-id="{{wp.id}}">Edit</button>
+                            <button class="remove-weapon_btn" data-id="{{wp.weapon.id}}" data-name="{{wp.weapon.name}}" data-image_name="{{wp.weapon.image}}" style="color: tomato;">Remove</button>
+                        </div>
+                    </div>
+                    <div class="material-grid">
+                        <div class="material-chip lv0 ascension_modal" data-id="{{wp.ascension.id}}">
+                            <img class="image-item" src="{{wp.ascension.lf_image}}" alt="{{wp.ascension.lf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.ascension.user_ascension_quantity_lf < wp.ascension.need_lf %}bad{% endif %}"
+                                >{{wp.ascension.user_ascension_quantity_lf}}</span>/<span class="need">{{wp.ascension.need_lf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 ascension_modal" data-id="{{wp.ascension.id}}">
+                            {% if wp.ascension.remains_to_farm_mf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.ascension.remains_to_farm_mf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.ascension.mf_image}}" alt="{{wp.ascension.mf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.ascension.user_ascension_quantity_mf < wp.ascension.need_mf %}bad{% endif %}"
+                                >{{wp.ascension.user_ascension_quantity_mf}}</span>/<span class="need">{{wp.ascension.need_mf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 ascension_modal" data-id="{{wp.ascension.id}}">
+                            {% if wp.ascension.remains_to_farm_hf > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.ascension.remains_to_farm_hf}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.ascension.hf_image}}" alt="{{wp.ascension.hf_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.ascension.user_ascension_quantity_hf < wp.ascension.need_hf %}bad{% endif %}"
+                                >{{wp.ascension.user_ascension_quantity_hf}}</span>/<span class="need">{{wp.ascension.need_hf}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 ascension_modal" data-id="{{wp.ascension.id}}">
+                            {% if wp.ascension.remains_to_farm_ff > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.ascension.remains_to_farm_ff}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.ascension.ff_image}}" alt="{{wp.ascension.ff_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.ascension.user_ascension_quantity_ff < wp.ascension.need_ff %}bad{% endif %}"
+                                >{{wp.ascension.user_ascension_quantity_ff}}</span>/<span class="need">{{wp.ascension.need_ff}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv0 weapon_ascension_modal" data-id="{{wp.weapon_ascension.id}}">
+                            <img class="image-item" src="{{wp.weapon_ascension.green_image}}" alt="{{wp.weapon_ascension.green_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.weapon_ascension.user_weapon_ascension_quantity_green < wp.weapon_ascension.need_green %}bad{% endif %}"
+                                >{{wp.weapon_ascension.user_weapon_ascension_quantity_green}}</span>/<span class="need">{{wp.weapon_ascension.need_green}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv1 weapon_ascension_modal" data-id="{{wp.weapon_ascension.id}}">
+                            {% if wp.weapon_ascension.remains_to_farm_blue > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.weapon_ascension.remains_to_farm_blue}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.weapon_ascension.blue_image}}" alt="{{wp.weapon_ascension.blue_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.weapon_ascension.user_weapon_ascension_quantity_blue < wp.weapon_ascension.need_blue %}bad{% endif %}"
+                                >{{wp.weapon_ascension.user_weapon_ascension_quantity_blue}}</span>/<span class="need">{{wp.weapon_ascension.need_blue}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv2 weapon_ascension_modal" data-id="{{wp.weapon_ascension.id}}">
+                            {% if wp.weapon_ascension.remains_to_farm_purple > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.weapon_ascension.remains_to_farm_purple}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.weapon_ascension.purple_image}}" alt="{{wp.weapon_ascension.purple_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.weapon_ascension.user_weapon_ascension_quantity_purple < wp.weapon_ascension.need_purple %}bad{% endif %}"
+                                >{{wp.weapon_ascension.user_weapon_ascension_quantity_purple}}</span>/<span class="need">{{wp.weapon_ascension.need_purple}}</span>
+                            </div>
+                        </div>
+                        <div class="material-chip lv3 weapon_ascension_modal" data-id="{{wp.weapon_ascension.id}}">
+                            {% if wp.weapon_ascension.remains_to_farm_yellow > 0 %}
+                                <div class="craft-badge">
+                                    <img src="{% static 'wuwa/img/exchange.png' %}" style="width: 12px; height: 12px;">
+                                    <span>{{wp.weapon_ascension.remains_to_farm_yellow}}</span>
+                                </div>
+                            {% endif %}
+                            <img class="image-item" src="{{wp.weapon_ascension.yellow_image}}" alt="{{wp.weapon_ascension.yellow_name}}">
+                            <div class="cnt">
+                                <span 
+                                    class="own {% if wp.weapon_ascension.user_weapon_ascension_quantity_yellow < wp.weapon_ascension.need_yellow %}bad{% endif %}"
+                                >{{wp.weapon_ascension.user_weapon_ascension_quantity_yellow}}</span>/<span class="need">{{wp.weapon_ascension.need_yellow}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="plan-details d-none">
+                        <div class="d-flex">
+                            <span>Level</span>
+                            <div class="ms-auto">{{wp.statisitics.min_level}}</div>
+                            <div>→</div>
+                            <div>{{wp.statisitics.max_level}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="plan-overlay" style="
+                        position: absolute; inset: 0px; background: rgba(0, 0, 0, 0.5); pointer-events: none; z-index: 10; border-radius: inherit; 
+                       display:{% if wp.active %} none {% else %} block {% endif %};
+                    "></div>
+                </div>
+            {% endfor %}
+        </section>
+    </div>
+        
+        {% include "modal/characterSelectModal.html" %}
+        {% include "modal/characterSetupModal.html" %}
+        {% include "modal/weaponSelectModal.html" %}
+        {% include "modal/weaponSetupModal.html" %}
+        {% include "modal/ressourceModal.html" %}
+        {% include "modal/ascensionModal.html" %}
+        {% include "modal/weaponAscensionModal.html" %}
+        {% include "modal/resonatorAscensionModal.html" %}
+        {% include "modal/skillUpgradeModal.html" %}
+        {% include "modal/removeCharacterModal.html" %}
+        {% include "modal/removeWeaponModal.html" %}
+
+        <script src="{% static 'wuwa/js/progression.js' %}" ></script>
+{% endblock %}

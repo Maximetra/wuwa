@@ -1,0 +1,74 @@
+<div class="modal" id="skillUpgradeModal" role="dialog" aria-labelledby="skillUpgradeTitle">
+    {% csrf_token %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="skillUpgradeTitle" data-id="">Skill Upgrade</h3>
+                <button class="icon-btn close" data-dismiss="modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-section">
+                    <div class="inv-header">
+                        <img class="inv-header-icon skillUpgrade-image" src="" alt="Null">
+                        <div class="inv-header-text">
+                            <div class="inv-header-name skillUpgrade-name">Null</div>
+                            <div class="inv-header-desc">Skill Upgrade Materials are used for raising the higher levels of a Resonator's Skills.</div>
+                        </div>
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img class="skillUpgrade-image" src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;" class="skillUpgrade-name">Null</label>: <input class="skillUpgrade-input" type="number" min="0" max="9999" step="1" data-key="lv_exp3">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                </div>
+                <p id="inventoryHint" style="opacity:.8;margin-top:8px;font-size:12px;"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn close-cancel" data-dismiss="modal">Cancel</button>
+                <button id="skillUpgrade-save" class="primary-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.inventory-slider').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.skillUpgrade-input').val(val);
+        });
+
+        $('.skillUpgrade-input').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.inventory-slider').val(val);
+        });
+
+        $("#skillUpgradeModal").on( "click", "#skillUpgrade-save", function() {
+            const skillUpgradeId = $('#skillUpgradeTitle').data('id');
+            const quantity = parseInt($('.skillUpgrade-input').val());
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/update_skill_upgrade/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    skill_upgrade_id: skillUpgradeId,
+                    quantity: quantity
+                }),
+                success: function(response) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating ressource: ' + error);
+                }
+            });
+        });
+    })
+</script>

@@ -1,0 +1,1 @@
+[{"stmt":"SELECT * FROM wuwa_userressource;","header":["id","quantity","ressource_id","user_id"],"rows":[["1","100","1","2"],["2","756","5","2"],["3","9131","2","2"],["4","15","6","2"]]}]

@@ -1,0 +1,47 @@
+<div class="modal" id="removeCharacterModal" role="dialog" aria-labelledby="removeCharacterModalTitle">
+    {% csrf_token %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="removeCharacterModalTitle" data-id="">Delete Account</h3>
+                <button class="icon-btn close" data-dismiss="modal">✕</button>
+            </div>
+            <div class="modal-body text-center">
+                    <img id="removeCharacterModal-character" src="" alt="Character Image">
+                    <p id="removeCharacterModal-description"></p>
+                    
+                    <div class="modal-choices mb-4">
+                        <button class="secondary-btn close-cancel" type="button">Cancel</button>
+                        <button id="removeCharacterModal-save" class="removeCharacterModal-save ms-3" type="button">Delete</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#removeCharacterModal").on( "click", "#removeCharacterModal-save", function() {
+            const characterId = $('#removeCharacterModal').data('id');
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/remove_user_character/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    character_id: characterId,
+                }),
+                success: function(response) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating ressource: ' + error);
+                }
+            });
+        });
+    })
+</script>

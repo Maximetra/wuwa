@@ -1,0 +1,20 @@
+<div class="modal" id="weaponSelectModal" role="dialog" aria-labelledby="weaponSelectModalTitle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="weaponSelectModalTitle">Select Weapon</h3>
+                <button class="icon-btn close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="weapon-grid">
+                    {% for w in weapons %}
+                        <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer;" class="weapon-card" data-id="{{ w.id }}">
+                            <img src="{{ w.image }}" alt="{{ w.name }}" title="{{ w.name }}">
+                            <div style="margin-top: 4px; font-size: 11px; opacity: 0.9; text-align: center;">{{ w.name }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

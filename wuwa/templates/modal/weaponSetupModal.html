@@ -1,0 +1,111 @@
+<div class="modal" id="weaponSetupModal" data-id="" role="dialog" aria-labelledby="weaponSetupModalTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="weaponSetupModalImage" src="" alt="" class="setup-avatar">
+                <h3 id="weaponSetupModalTitle"></h3>
+                <button class="icon-btn close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-grid">
+                    <div class="setup-section">
+                        <h4 data-i18n="level">Level</h4>
+                        <div class="setting-row" data-dual-attached="1">
+                            <div class="dual-wrapper">
+                                <div class="row-title">Weapon LVL</div>
+                                <div class="dual-number-row">
+                                    <div class="d-flex flex-column input-container">
+                                        <input id="weapon-min_level" type="number" value="1" min="1" max="90">
+                                        <div class="dual-slider-row">
+                                            <input type="range" value="1" min="1" max="90" step="1">
+                                        </div>
+                                    </div>
+                                    <div class="arrow big">→</div>
+                                    <div class="d-flex flex-column input-container">
+                                        <input id="weapon-max_level" type="number" value="90" min="1" max="90">
+                                        <div class="dual-slider-row">
+                                            <input type="range" value="90" min="1" max="90" step="1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn close-cancel">Cancel</button>
+                <button id="weaponSetupModal-save" class="primary-btn" data-i18n="save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('input[type="range"]').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.input-container').find('input[type="number"]').val(val);
+        });
+
+        $('.input-container > input').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.input-container').find('input[type="range"]').val(val);
+        });
+
+        $("#weaponSetupModal").on( "click", "#weaponSetupModal-save", function() {
+            const weapon_id = parseInt($('#weaponSetupModal').attr('data-id'));
+            const min_level = parseInt($('#weapon-min_level').val());
+            const max_level = parseInt($('#weapon-max_level').val());
+
+            const min_normal_attack_level = parseInt($('#min_normal_attack_level').val());
+            const max_normal_attack_level = parseInt($('#max_normal_attack_level').val());
+
+            const min_resonance_skill_level = parseInt($('#min_resonance_skill_level').val());
+            const max_resonance_skill_level = parseInt($('#max_resonance_skill_level').val());
+
+            const min_resonance_liberation_level = parseInt($('#min_resonance_liberation_level').val());
+            const max_resonance_liberation_level = parseInt($('#max_resonance_liberation_level').val());
+
+            const min_forte_circuit_level = parseInt($('#min_forte_circuit_level').val());
+            const max_forte_circuit_level = parseInt($('#max_forte_circuit_level').val());
+
+            const min_intro_skill_level = parseInt($('#min_intro_skill_level').val());
+            const max_intro_skill_level = parseInt($('#max_intro_skill_level').val());
+
+            const first_tier_trace1 = $('#first_tier_trace1').is(':checked');
+            const first_tier_trace2 = $('#first_tier_trace2').is(':checked');
+            const first_tier_trace3 = $('#first_tier_trace3').is(':checked');
+            const first_tier_trace4 = $('#first_tier_trace4').is(':checked');
+            const second_tier_trace1 = $('#second_tier_trace1').is(':checked');
+            const second_tier_trace2 = $('#second_tier_trace2').is(':checked');
+            const second_tier_trace3 = $('#second_tier_trace3').is(':checked');
+            const second_tier_trace4 = $('#second_tier_trace4').is(':checked');
+
+            const first_inherent_skill = $('#first_inherent_skill').is(':checked');
+            const second_inherent_skill = $('#second_inherent_skill').is(':checked');
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/update_user_weapon/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    weapon_id: weapon_id,
+                    min_level: min_level,
+                    max_level: max_level,
+                }),
+                success: function(res) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating ressource: ' + error);
+                }
+            });
+        });
+    })
+</script>

@@ -1,0 +1,74 @@
+<div class="modal" id="ressourceModal" role="dialog" aria-labelledby="ressourceModalTitle">
+    {% csrf_token %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ressourceModalTitle" data-id="">Resonator Ascension</h3>
+                <button class="icon-btn close" data-dismiss="modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="setup-section">
+                    <div class="inv-header">
+                        <img class="inv-header-icon ressourceModal-image" src="" alt="Null">
+                        <div class="inv-header-text">
+                            <div class="inv-header-name ressourceModal-name">Null</div>
+                            <div class="inv-header-desc">Resonator Ascension Materials are used for ascending Resonators.</div>
+                        </div>
+                    </div>
+                    <div class="inv-wrap">
+                        <div class="row inv-row">
+                            <img class="ressourceModal-image" src="" alt="Null" style="width: 50px; height: 50px;">
+                            <label style="min-width: 80px;" class="ressourceModal-name">Null</label>: <input class="ressourceModal-input" type="number" min="0" max="9999" step="1" data-key="lv_exp3">
+                        </div>
+                        <input type="range" min="0" max="9999" step="1" class="inventory-slider">
+                    </div>
+                </div>
+                <p id="inventoryHint" style="opacity:.8;margin-top:8px;font-size:12px;"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn close-cancel" data-dismiss="modal">Cancel</button>
+                <button id="ressourceModal-save" class="primary-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.inventory-slider').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.ressourceModal-input').val(val);
+        });
+
+        $('.ressourceModal-input').on('input', function() {
+            let val = $(this).val();
+            $(this).closest('.inv-wrap').find('.inventory-slider').val(val);
+        });
+
+        $("#ressourceModal").on( "click", "#ressourceModal-save", function() {
+            const ressourceId = $('#ressourceModalTitle').data('id');
+            const quantity = parseInt($('.ressourceModal-input').val());
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
+                document.querySelector('[name=csrfmiddlewaretoken]').value : 
+                getCookie('csrftoken');
+
+            $.ajax({
+                url: '/update_ressource/',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {'X-CSRFToken': csrftoken},
+                data: JSON.stringify({
+                    ressource_id: ressourceId,
+                    quantity: quantity
+                }),
+                success: function(response) {
+                    history.go(0);
+                },
+                error: function(xhr, status, error) {
+                    alert('Error updating ressource: ' + error);
+                }
+            });
+        });
+    })
+</script>

@@ -1,0 +1,1 @@
+[{"stmt":"SELECT * FROM wuwa_weapon;","header":["id","name","image","ascension_id","weapon_ascension_id","weapon_type_id"],"rows":[["1","Blazing Brilliance","https://static.wikia.nocookie.net/wutheringwaves/images/1/17/Weapon_Blazing_Brilliance.png/revision/latest?cb=20240721155939","8","9","5"]]}]
