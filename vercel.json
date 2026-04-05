@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "installCommand": "pip install -r requirements.txt && python create_admin.py",
   "builds": [
     {
       "src": "wuwa/wsgi.py",
