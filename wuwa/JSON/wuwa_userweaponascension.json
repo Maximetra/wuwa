@@ -1,1 +1,0 @@
-[{"stmt":"SELECT * FROM wuwa_userweaponascension;","header":["id","quantity_green","quantity_blue","quantity_purple","quantity_yellow","user_id","weapon_ascension_id"],"rows":[["1","318","833","1985","6605","2","2"],["2","4","74","878","7841","2","9"],["3","818","1409","318","5227","2","10"]]}]
