@@ -60,7 +60,6 @@ class SkillUpgradeForm(forms.ModelForm):
 
 class SkillUpgradeAdmin(admin.ModelAdmin):
     form = SkillUpgradeForm
-    form = WeaponAscensionForm
 
 
 class MainForteForm(forms.ModelForm):
