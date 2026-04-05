@@ -92,7 +92,7 @@
 
                     {% for wa  in weapon_ascensions  %}
                         <div class="material-chip lv0 weapon_ascension_modal" data-id="{{wa.id}}">
-                            <img src="{{wa.green_image}}" alt="{{wa.green_name}}">
+                            <img class="image-item" src="{{wa.green_image}}" alt="{{wa.green_name}}">
                             <div class="cnt">
                                 <span 
                                     class="own {% if wa.user_weapon_ascension_quantity_green < wa.need_green %}bad{% endif %}"
