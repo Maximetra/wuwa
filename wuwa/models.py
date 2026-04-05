@@ -76,15 +76,29 @@ class Weapon(models.Model):
     def __str__(self):
         return self.name
 
+class MainForte(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    image = models.URLField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class MinorForte(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    image = models.URLField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Character(models.Model):
     name = models.CharField(max_length=30, unique=True)
     image = models.URLField(max_length=255, unique=True)
-    minor_forte_1 = models.URLField(max_length=255)
-    minor_forte_2 = models.URLField(max_length=255)
     inherent_skill_1 = models.URLField(max_length=255)
     inherent_skill_2 = models.URLField(max_length=255)
     release_date = models.DateField(default='2024-05-23')
     rarity = models.PositiveIntegerField(default=5, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    main_forte = models.ForeignKey(MainForte, on_delete=models.SET_NULL, null=True)
+    minor_forte = models.ForeignKey(MinorForte, on_delete=models.SET_NULL, null=True)
     element = models.ForeignKey(Element, on_delete=models.SET_NULL, null=True)
     weapon_type = models.ForeignKey(WeaponType, on_delete=models.SET_NULL, null=True)
     ressource = models.ForeignKey(Ressource, on_delete=models.SET_NULL, null=True)

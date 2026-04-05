@@ -163,9 +163,9 @@ $(document).ready(function () {
                 let c = data.character;
                 $('#characterSetupModalTitle').text(c.name);
                 $('#characterSetupModalImage').attr('src', c.image).attr('alt', c.name);
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte_2).attr("alt", c.name + " Minor Forte 2");
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte).attr("alt", c.name + " Minor Forte 2");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
 
                 $("#characterSetupModal #inherent_skill .img-fluid").first().attr("src", c.inherent_skill_1).attr("alt", c.name + " Inherent Skill 1");
                 $("#characterSetupModal #inherent_skill .img-fluid").last().attr("src", c.inherent_skill_2).attr("alt", c.name + " Inherent Skill 2");
@@ -188,9 +188,9 @@ $(document).ready(function () {
                 let c = data.weapon;
                 $('#weaponSetupModalTitle').text(c.name);
                 $('#weaponSetupModalImage').attr('src', c.image).attr('alt', c.name);
-                $("#weaponSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
-                $("#weaponSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte_2).attr("alt", c.name + " Minor Forte 2");
-                $("#weaponSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
+                $("#weaponSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
+                $("#weaponSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte).attr("alt", c.name + " Minor Forte 2");
+                $("#weaponSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
 
                 $("#weaponSetupModal #inherent_skill .img-fluid").first().attr("src", c.inherent_skill_1).attr("alt", c.name + " Inherent Skill 1");
                 $("#weaponSetupModal #inherent_skill .img-fluid").last().attr("src", c.inherent_skill_2).attr("alt", c.name + " Inherent Skill 2");
@@ -356,9 +356,9 @@ $(document).ready(function () {
                 }
 
 
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte_2).attr("alt", c.name + " Minor Forte 2");
-                $("#characterSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.minor_forte_1).attr("alt", c.name + " Minor Forte 1");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(0, 2).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(2, 6).attr("src", c.minor_forte).attr("alt", c.name + " Minor Forte 2");
+                $("#characterSetupModal #stat_bonus .img-fluid").slice(6, 8).attr("src", c.main_forte).attr("alt", c.name + " Minor Forte 1");
 
                 $("#characterSetupModal #inherent_skill .img-fluid").first().attr("src", c.inherent_skill_1).attr("alt", c.name + " Inherent Skill 1");
                 $("#characterSetupModal #inherent_skill .img-fluid").last().attr("src", c.inherent_skill_2).attr("alt", c.name + " Inherent Skill 2");

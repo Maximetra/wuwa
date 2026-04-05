@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from wuwa.models import Ascension, UserAscension, Character, Element, ResonatorAscension, Ressource, SkillUpgrade, User, UserCharacter, UserResonatorAscension, UserRessource, UserWeapon, UserWeaponAscension, Weapon, WeaponAscension, WeaponType
+from wuwa.models import Ascension, MainForte, MinorForte, UserAscension, Character, Element, ResonatorAscension, Ressource, SkillUpgrade, User, UserCharacter, UserResonatorAscension, UserRessource, UserWeapon, UserWeaponAscension, Weapon, WeaponAscension, WeaponType
 
 class ElementForm(forms.ModelForm):
     class Meta:
@@ -60,12 +60,36 @@ class SkillUpgradeForm(forms.ModelForm):
 
 class SkillUpgradeAdmin(admin.ModelAdmin):
     form = SkillUpgradeForm
+    form = WeaponAscensionForm
+
+
+class MainForteForm(forms.ModelForm):
+    class Meta:
+        model = MainForte
+        fields = ['name', 'image']
+        exclude = []
+
+class MainForteAdmin(admin.ModelAdmin):
+    form = MainForteForm
+
+
+class MinorForteForm(forms.ModelForm):
+    class Meta:
+        model = MinorForte
+        fields = ['name', 'image']
+        exclude = []
+
+class MinorForteAdmin(admin.ModelAdmin):
+    form = MinorForteForm
 
 
 class CharacterForm(forms.ModelForm):
     class Meta:
         model = Character
-        fields = ['name', 'image', 'rarity', 'element', 'ressource', 'ascension', 'skill_upgrade', 'resonator_ascension', 'weapon_type', 'weapon_ascension', 'minor_forte_1', 'minor_forte_2', 'inherent_skill_1', 'inherent_skill_2', 'release_date']
+        fields = [
+            'name', 'image', 'rarity', 'ressource', 'ascension', 'skill_upgrade', 'resonator_ascension', 'weapon_type', 'weapon_ascension', 
+            'main_forte', 'minor_forte', 'inherent_skill_1', 'inherent_skill_2', 'release_date'
+        ]
         exclude = []
 
 class CharacterAdmin(admin.ModelAdmin):

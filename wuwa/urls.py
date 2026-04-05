@@ -17,8 +17,8 @@ Including another URLconf
 from django import forms
 from django.contrib import admin
 from django.urls import path
-from wuwa.models import UserAscension, Element, Ressource, Ascension, ResonatorAscension, User, UserCharacter, UserResonatorAscension, UserRessource, UserWeapon, UserWeaponAscension, Weapon, WeaponAscension, SkillUpgrade, Character, WeaponType
-from wuwa.view.admin import AscensionAdmin, UserAscensionAdmin, CharacterAdmin, ElementAdmin, ResonatorAscensionAdmin, RessourceAdmin, SkillUpgradeAdmin, UserAdmin, UserCharacterAdmin, UserResonatorAscensionAdmin, UserRessourceAdmin, UserWeaponAdmin, UserWeaponAscensionAdmin, WeaponAdmin, WeaponAscensionAdmin, WeaponTypeAdmin
+from wuwa.models import MainForte, MinorForte, UserAscension, Element, Ressource, Ascension, ResonatorAscension, User, UserCharacter, UserResonatorAscension, UserRessource, UserWeapon, UserWeaponAscension, Weapon, WeaponAscension, SkillUpgrade, Character, WeaponType
+from wuwa.view.admin import AscensionAdmin, MainForteAdmin, MinorForteAdmin, UserAscensionAdmin, CharacterAdmin, ElementAdmin, ResonatorAscensionAdmin, RessourceAdmin, SkillUpgradeAdmin, UserAdmin, UserCharacterAdmin, UserResonatorAscensionAdmin, UserRessourceAdmin, UserWeaponAdmin, UserWeaponAscensionAdmin, WeaponAdmin, WeaponAscensionAdmin, WeaponTypeAdmin
 from wuwa.view.ascension import get_ascension_api, update_ascension_api
 from wuwa.view.character import get_character_api
 from wuwa.view.progression import get_progression_view
@@ -31,20 +31,22 @@ from wuwa.view.user_weapon import get_user_weapon_api, remove_user_weapon_api, u
 from wuwa.view.weapon import get_weapon_api
 from wuwa.view.weapon_ascension import get_weapon_ascension_api, update_weapon_ascension_api
 
-admin.site.register(Element, ElementAdmin)
-admin.site.register(Ressource, RessourceAdmin)
 admin.site.register(Ascension, AscensionAdmin)
-admin.site.register(ResonatorAscension, ResonatorAscensionAdmin)
-admin.site.register(WeaponAscension, WeaponAscensionAdmin)
-admin.site.register(SkillUpgrade, SkillUpgradeAdmin)
 admin.site.register(Character, CharacterAdmin)
-admin.site.register(WeaponType, WeaponTypeAdmin)
-admin.site.register(Weapon, WeaponAdmin)
+admin.site.register(Element, ElementAdmin)
+admin.site.register(MainForte, MainForteAdmin)
+admin.site.register(MinorForte, MinorForteAdmin)
+admin.site.register(Ressource, RessourceAdmin)
+admin.site.register(ResonatorAscension, ResonatorAscensionAdmin)
+admin.site.register(SkillUpgrade, SkillUpgradeAdmin)
 admin.site.register(User, UserAdmin)
+admin.site.register(UserAscension, UserAscensionAdmin)
 admin.site.register(UserCharacter, UserCharacterAdmin)
 admin.site.register(UserRessource, UserRessourceAdmin)
-admin.site.register(UserAscension, UserAscensionAdmin)
 admin.site.register(UserWeapon, UserWeaponAdmin)
+admin.site.register(WeaponAscension, WeaponAscensionAdmin)
+admin.site.register(Weapon, WeaponAdmin)
+admin.site.register(WeaponType, WeaponTypeAdmin)
 admin.site.register(UserWeaponAscension, UserWeaponAscensionAdmin)
 admin.site.register(UserResonatorAscension, UserResonatorAscensionAdmin)
 

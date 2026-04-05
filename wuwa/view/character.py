@@ -10,8 +10,8 @@ def get_character_api(request, character_id):
             'id': character.id,
             'name': character.name,
             'image': character.image,
-            'minor_forte_1': character.minor_forte_1,
-            'minor_forte_2': character.minor_forte_2,
+            'main_forte': character.main_forte.image,
+            'minor_forte': character.minor_forte.image,
             'inherent_skill_1': character.inherent_skill_1,
             'inherent_skill_2': character.inherent_skill_2,
         }
