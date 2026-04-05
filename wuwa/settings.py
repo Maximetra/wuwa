@@ -83,13 +83,20 @@ WSGI_APPLICATION = 'wuwa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # On dit explicitement à Django de chercher la variable DATABASE_URL de Neon
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
-    )
-}
+db_from_env = os.environ.get('DATABASE_URL')
+
+if db_from_env:
+    DATABASES = {
+        'default': dj_database_url.parse(db_from_env)
+    }
+    DATABASES['default']['CONN_MAX_AGE'] = 0
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation
