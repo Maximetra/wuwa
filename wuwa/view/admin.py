@@ -86,7 +86,7 @@ class CharacterForm(forms.ModelForm):
     class Meta:
         model = Character
         fields = [
-            'name', 'image', 'rarity', 'element', 'ressource', 'ascension', 'skill_upgrade', 'resonator_ascension', 'weapon_type',
+            'name', 'image', 'rarity', 'element', 'weapon_type', 'ressource', 'ascension', 'skill_upgrade', 'resonator_ascension',
             'weapon_ascension', 'main_forte', 'minor_forte', 'inherent_skill_1', 'inherent_skill_2', 'release_date'
         ]
         exclude = []
