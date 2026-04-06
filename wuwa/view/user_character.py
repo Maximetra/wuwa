@@ -8,6 +8,7 @@ from wuwa.models import Character, UserCharacter
 @login_required
 def get_user_character_api(request, user_character_id):
     uc = UserCharacter.objects.get(id=user_character_id)
+
     return JsonResponse({
         'id': uc.character.id,
         'name': uc.character.name,
@@ -24,8 +25,8 @@ def get_user_character_api(request, user_character_id):
         'max_forte_circuit_level': uc.max_forte_circuit_level,
         'min_intro_skill_level': uc.min_intro_skill_level,
         'max_intro_skill_level': uc.max_intro_skill_level,
-        'main_forte': uc.character.main_forte,
-        'minor_forte': uc.character.minor_forte,
+        'main_forte': uc.character.main_forte.image if uc.character.main_forte else None,
+        'minor_forte': uc.character.minor_forte.image if uc.character.minor_forte else None,
         'inherent_skill_1': uc.character.inherent_skill_1,
         'inherent_skill_2': uc.character.inherent_skill_2,
         'first_tier_trace1': uc.first_tier_trace1,

@@ -53,6 +53,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#skillUpgradeModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/update_skill_upgrade/',
                 method: 'POST',

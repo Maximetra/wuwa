@@ -414,6 +414,8 @@ $(document).ready(function () {
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+        $('#modal-loading').modal('show');
+
         $.ajax({
             url: '/update_user_character/',
             method: 'POST',
@@ -438,6 +440,8 @@ $(document).ready(function () {
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') ? 
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
+
+        $('#modal-loading').modal('show');
 
         $.ajax({
             url: '/update_user_weapon/',

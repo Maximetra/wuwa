@@ -78,6 +78,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#ascensionModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/update_ascension/',
                 method: 'POST',

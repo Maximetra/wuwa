@@ -27,6 +27,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#removeWeaponModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/remove_user_weapon/',
                 method: 'POST',

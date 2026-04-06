@@ -89,6 +89,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#weaponSetupModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/update_user_weapon/',
                 method: 'POST',

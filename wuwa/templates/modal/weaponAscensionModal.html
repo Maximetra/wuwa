@@ -78,6 +78,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#weaponAscensionModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/update_weapon_ascension/',
                 method: 'POST',

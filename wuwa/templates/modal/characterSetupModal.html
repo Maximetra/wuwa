@@ -299,6 +299,9 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
+            $('#characterSetupModal').modal('hide');
+            $('#modal-loading').modal('show');
+
             $.ajax({
                 url: '/update_user_character/',
                 method: 'POST',
