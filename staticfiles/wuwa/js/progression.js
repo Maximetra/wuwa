@@ -21,8 +21,6 @@ $(document).ready(function () {
     });
 
     $("#addWeaponBtn").click(function(e) {
-        console.log(123);
-        
         $('#weaponSelectModal').modal('show');
     });
 
@@ -77,12 +75,14 @@ $(document).ready(function () {
     });
 
     $(".ascension_modal").click(function() {
-        const current_ascension = $(this);        
+        $('#modal-loading').modal('show');
+        const current_ascension = $(this);
         
         $.ajax({
             url: '/ascension/' + $(this).data('id'),
             method: 'GET',
             success: function(data) {
+                $('#modal-loading').modal('hide');
                 let a = data.ascension;
                 $('#ascensionModalTitle').attr('data-id', current_ascension.attr('data-id'));
                 $('.ascensionModal-image').attr('src', current_ascension.find('.image-item').attr('src'));
@@ -114,12 +114,14 @@ $(document).ready(function () {
     });
 
     $(".weapon_ascension_modal").click(function() {
-        const current_weapon_ascension = $(this);        
+        $('#modal-loading').modal('show');
+        const current_weapon_ascension = $(this);
         
         $.ajax({
             url: '/weapon_ascension/' + $(this).data('id'),
             method: 'GET',
-            success: function(data) {                
+            success: function(data) {
+                $('#modal-loading').modal('hide');
                 let a = data.weapon_ascension;
                 $('#weaponAscensionModalTitle').attr('data-id', current_weapon_ascension.attr('data-id'));
                 $('.weaponAscensionModal-image').attr('src', current_weapon_ascension.find('.image-item').attr('src'));
@@ -155,11 +157,14 @@ $(document).ready(function () {
     });
 
     $(".character-card").click(function() {
+        $('#characterSelectModal').modal('hide');
+        $('#modal-loading').modal('show');
         const current_character = $(this);
         $.ajax({
             url: '/character/' + $(this).data('id'),
             method: 'GET',
             success: function(data) {
+                $('#modal-loading').modal('hide');
                 let c = data.character;
                 $('#characterSetupModalTitle').text(c.name);
                 $('#characterSetupModalImage').attr('src', c.image).attr('alt', c.name);
@@ -170,7 +175,6 @@ $(document).ready(function () {
                 $("#characterSetupModal #inherent_skill .img-fluid").first().attr("src", c.inherent_skill_1).attr("alt", c.name + " Inherent Skill 1");
                 $("#characterSetupModal #inherent_skill .img-fluid").last().attr("src", c.inherent_skill_2).attr("alt", c.name + " Inherent Skill 2");
 
-                $('#characterSelectModal').modal('hide');
                 $('#characterSetupModal').modal('show').attr('data-id', current_character.attr('data-id'));
             },
             error: function() {
@@ -180,11 +184,14 @@ $(document).ready(function () {
     });
 
     $(".weapon-card").click(function() {
+        $('#weaponSelectModal').modal('hide');
+        $('#modal-loading').modal('show');
         const current_weapon = $(this);
         $.ajax({
             url: '/weapon/' + $(this).data('id'),
             method: 'GET',
             success: function(data) {
+                $('#modal-loading').modal('hide');
                 let c = data.weapon;
                 $('#weaponSetupModalTitle').text(c.name);
                 $('#weaponSetupModalImage').attr('src', c.image).attr('alt', c.name);
@@ -195,7 +202,6 @@ $(document).ready(function () {
                 $("#weaponSetupModal #inherent_skill .img-fluid").first().attr("src", c.inherent_skill_1).attr("alt", c.name + " Inherent Skill 1");
                 $("#weaponSetupModal #inherent_skill .img-fluid").last().attr("src", c.inherent_skill_2).attr("alt", c.name + " Inherent Skill 2");
 
-                $('#weaponSelectModal').modal('hide');
                 $('#weaponSetupModal').modal('show').attr('data-id', current_weapon.attr('data-id'));
             },
             error: function() {
@@ -248,18 +254,20 @@ $(document).ready(function () {
         $('#removeCharacterModal').attr('data-id', $(this).data('id')).modal('show');
     });
 
-    $(".remove-weapon_btn").click(function(e) {        
+    $(".remove-weapon_btn").click(function(e) {
         $('#removeWeaponModal-description').text(`Are you sure you want to delete ${$(this).data('name')}?`);
         $("#removeWeaponModal-weapon").attr('src', $(this).data('image_name')).attr('alt', $(this).data('name'));
         $('#removeWeaponModal').attr('data-id', $(this).data('id')).modal('show');
     });
 
     $(".edit-character_btn").click(function() {
+        $('#modal-loading').modal('show');
         const current_character = $(this);
         $.ajax({
             url: '/user_character/' + $(this).data('id'),
             method: 'GET',
             success: function(data) {
+                $('#modal-loading').modal('hide');
                 let c = data;
                 
                 $('#characterSetupModalTitle').text(c.name);
@@ -373,11 +381,13 @@ $(document).ready(function () {
     });
 
     $(".edit-weapon_btn").click(function() {
+        $('#modal-loading').modal('show');
         const current_weapon = $(this);
         $.ajax({
             url: '/user_weapon/' + $(this).data('id'),
             method: 'GET',
             success: function(data) {
+                $('#modal-loading').modal('hide');
                 const w = data;
                 
                 $('#weaponSetupModalTitle').text(w.name);

@@ -27,8 +27,6 @@
                 document.querySelector('[name=csrfmiddlewaretoken]').value : 
                 getCookie('csrftoken');
 
-                console.log(weaponId)
-
             $.ajax({
                 url: '/remove_user_weapon/',
                 method: 'POST',
