@@ -366,7 +366,7 @@ def build_user_weapons(user_weapons, list_user_weapons, total_needed, ascensions
 
 def build_need_and_quantity_individually(total_needed, ressources, resonator_ascensions, skill_upgrades, ascensions, weapon_ascensions):
     for r in ressources:
-        r.need = total_needed['resonator_ascension'].get(r.id, 0)
+        r.need = total_needed['ressource'].get(r.id, 0)
 
     for ra in resonator_ascensions:
         ra.need = total_needed['resonator_ascension'].get(ra.id, 0)
